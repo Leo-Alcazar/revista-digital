@@ -1,41 +1,28 @@
-"use client"; // Le decimos a Next.js que este componente se ejecuta en el navegador (cliente) para poder usar eventos como onClick
-
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../lib/firebase";
+import Header from "../components/Header";
 
 export default function Home() {
-  const handleTestDatabase = async () => {
-    try {
-      // Intentamos guardar un documento en la colección "categories"
-      const docRef = await addDoc(collection(db, "categories"), {
-        id: "diseno-ux",
-        name: "Diseño UX/UI",
-        description: "Explorando interfaces, usabilidad y experiencias digitales."
-      });
-
-      console.log("¡Documento escrito con ID: ", docRef.id);
-      alert("¡Éxito! Revisa la pestaña de Firestore en tu Emulador local.");
-    } catch (e) {
-      console.error("Error añadiendo el documento: ", e);
-      alert("Hubo un error. Revisa la consola.");
-    }
-  };
-
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-white text-black">
-      <h1 className="text-4xl md:text-6xl font-serif font-bold mb-8">
-        Yorokubu Clone
-      </h1>
-      <p className="mb-8 font-sans text-gray-600">
-        Prueba de conexión con Firebase Emulator
-      </p>
-
-      <button
-        onClick={handleTestDatabase}
-        className="px-6 py-3 bg-black text-white font-sans font-medium rounded hover:bg-gray-800 transition-colors"
-      >
-        Guardar Categoría de Prueba
-      </button>
-    </main>
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main className="max-w-5xl mx-auto p-6">
+        {/* Placeholder para Artículo Destacado */}
+        <section className="flex flex-col md:flex-row gap-8 mt-8">
+          {/* Imagen Mockup */}
+          <div className="flex-1 w-full bg-editorial-gray aspect-video rounded-md overflow-hidden flex items-center justify-center text-gray-400 font-sans">
+            Imagen Placeholder (Aspect Video)
+          </div>
+          
+          {/* Contenido del Artículo */}
+          <div className="flex-1 flex flex-col justify-center">
+            <span className="text-orange-600 font-sans font-bold text-xs uppercase mb-2">Creatividad</span>
+            <h2 className="font-serif text-3xl font-bold text-black mb-4">El arte de vivir despacio en un mundo acelerado</h2>
+            <time className="text-gray-500 font-sans text-xs mb-4">17 de Marzo, 2026</time>
+            <p className="text-gray-700 font-sans text-base leading-relaxed">
+              En una época donde la prisa dicta nuestras rutinas, algunos deciden rebelarse tomando el camino más largo. Descubre cómo la lentitud está transformando nuestra manera de entender el éxito y el bienestar.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }
