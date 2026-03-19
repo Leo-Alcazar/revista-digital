@@ -43,3 +43,6 @@ next-env.d.ts
 
 # Firebase logs
 *-debug.log
+
+# Firebase emulators
+saved-data/
