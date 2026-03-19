@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 export interface Article {
@@ -12,7 +12,7 @@ export interface Article {
   author?: string;
 }
 
-export function useArticles() {
+export function useArticles(categoryId?: string) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -20,7 +20,9 @@ export function useArticles() {
   useEffect(() => {
     async function fetchArticles() {
       try {
-        const q = query(collection(db, 'articles'));
+        const q = categoryId 
+          ? query(collection(db, 'articles'), where('category', '==', categoryId))
+          : query(collection(db, 'articles'));
         const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs.map(doc => ({
           id: doc.id,
@@ -37,7 +39,7 @@ export function useArticles() {
     }
 
     fetchArticles();
-  }, []);
+  }, [categoryId]);
 
   return { articles, loading, error };
 }
