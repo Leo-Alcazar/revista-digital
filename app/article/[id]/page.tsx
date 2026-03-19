@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import Header from "../../../components/Header";
 import { useArticle } from "@/lib/hooks/useArticle";
+import Link from "next/link";
 
 export default function ArticlePage() {
   const params = useParams();
@@ -38,10 +39,19 @@ export default function ArticlePage() {
           <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6 text-black">
             {article.title}
           </h1>
+
+          {/* Autor */}
+          {article.authorId && (
+            <div className="mb-6">
+              <Link href={`/author/${article.authorId}`} className="font-sans text-sm font-bold uppercase text-black hover:underline">
+                Por: {article.authorId}
+              </Link>
+            </div>
+          )}
           
           {/* Metadatos */}
           <div className="text-gray-400 text-sm uppercase mb-12 border-b border-editorial-gray pb-6">
-            {article.date} {article.author && `| POR ${article.author}`}
+            {article.date}
           </div>
           
           {/* Imagen Principal */}

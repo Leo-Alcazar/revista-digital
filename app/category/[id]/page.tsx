@@ -10,7 +10,7 @@ export default function CategoryPage() {
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const decodedId = id ? decodeURIComponent(id) : "";
 
-  const { articles, loading, error } = useArticles(decodedId);
+  const { articles, loading, error } = useArticles({ categoryId: decodedId });
 
   return (
     <div className="min-h-screen bg-white">
@@ -39,7 +39,7 @@ export default function CategoryPage() {
             {articles.map((article) => (
               <Link href={`/article/${article.id}`} key={article.id}>
                 <article 
-                  className="flex flex-col md:flex-row gap-8 mb-16 border-b border-editorial-gray pb-16 hover:opacity-80 transition-opacity cursor-pointer"
+                  className="flex flex-col md:flex-row gap-8 mb-16 border-b border-editorial-gray pb-16 hover:opacity-80 transition-opacity cursor-pointer text-black"
                 >
                   {/* Lado izquierdo */}
                   <div className="flex-1 w-full bg-gray-100 aspect-video rounded-md overflow-hidden relative">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, QueryConstraint } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 export interface Article {
@@ -10,9 +10,15 @@ export interface Article {
   date: string;
   imageUrl?: string;
   author?: string;
+  authorId?: string;
 }
 
-export function useArticles(categoryId?: string) {
+export interface UseArticlesFilters {
+  categoryId?: string;
+  authorId?: string;
+}
+
+export function useArticles(filters?: UseArticlesFilters) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -20,9 +26,20 @@ export function useArticles(categoryId?: string) {
   useEffect(() => {
     async function fetchArticles() {
       try {
-        const q = categoryId 
-          ? query(collection(db, 'articles'), where('category', '==', categoryId))
+        setLoading(true);
+        const constraints: QueryConstraint[] = [];
+        
+        if (filters?.categoryId) {
+          constraints.push(where('category', '==', filters.categoryId));
+        }
+        if (filters?.authorId) {
+          constraints.push(where('authorId', '==', filters.authorId));
+        }
+
+        const q = constraints.length > 0 
+          ? query(collection(db, 'articles'), ...constraints)
           : query(collection(db, 'articles'));
+          
         const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs.map(doc => ({
           id: doc.id,
@@ -39,7 +56,7 @@ export function useArticles(categoryId?: string) {
     }
 
     fetchArticles();
-  }, [categoryId]);
+  }, [filters?.categoryId, filters?.authorId]);
 
   return { articles, loading, error };
 }
