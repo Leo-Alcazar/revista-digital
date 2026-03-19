@@ -13,8 +13,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Yorokubu Clone",
-  description: "Minimalist digital magazine",
+  title: "Revista digital",
+  description: "Un proyecto de portafolio editorial con Next.js y Firebase",
 };
 
 export default function RootLayout({
