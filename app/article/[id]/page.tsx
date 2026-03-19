@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import Header from "../../../components/Header";
 import { useArticle } from "@/lib/hooks/useArticle";
+import { useAuthor } from "@/lib/hooks/useAuthor";
 import Link from "next/link";
 
 export default function ArticlePage() {
@@ -11,6 +12,7 @@ export default function ArticlePage() {
   const decodedId = id ? decodeURIComponent(id) : "";
 
   const { article, loading, error } = useArticle(decodedId);
+  const { author } = useAuthor(article?.authorId || "");
 
   return (
     <div className="min-h-screen bg-white">
@@ -40,18 +42,38 @@ export default function ArticlePage() {
             {article.title}
           </h1>
 
-          {/* Autor */}
-          {article.authorId && (
-            <div className="mb-6">
-              <Link href={`/author/${article.authorId}`} className="font-sans text-sm font-bold uppercase text-black hover:underline">
-                Por: {article.authorId}
-              </Link>
+          {/* Autor y Fecha */}
+          <div className="flex items-center gap-3 mb-12 border-b border-editorial-gray pb-6">
+            {author && (
+              <>
+                {author.avatarUrl ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img 
+                    src={author.avatarUrl} 
+                    alt={author.name} 
+                    className="w-10 h-10 rounded-full object-cover" 
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold font-serif text-gray-500">
+                    {author.name.charAt(0).toUpperCase()}
+                  </div>
+                )}
+                
+                <div className="font-sans text-gray-700">
+                  Escrito por <Link href={`/author/${author.id}`} className="font-bold hover:underline text-black">{author.name}</Link>
+                </div>
+              </>
+            )}
+
+            {!author && article.authorId && (
+              <div className="font-sans text-gray-700">
+                Escrito por <Link href={`/author/${article.authorId}`} className="font-bold hover:underline text-black">{article.authorId}</Link>
+              </div>
+            )}
+            
+            <div className="ml-auto text-gray-400 text-sm uppercase">
+              {article.date}
             </div>
-          )}
-          
-          {/* Metadatos */}
-          <div className="text-gray-400 text-sm uppercase mb-12 border-b border-editorial-gray pb-6">
-            {article.date}
           </div>
           
           {/* Imagen Principal */}
