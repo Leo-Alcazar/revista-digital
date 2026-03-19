@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Revista Digital - Editorial Frontend 📰
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 
-First, run the development server:
+Bienvenido al repositorio de este proyecto, una revista digital inspirada en la estética editorial de *Yorokubu*. El objetivo principal de este desarrollo es combinar un diseño minimalista de alto contraste con una arquitectura moderna de base de datos NoSQL.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Características Principales
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* **Arquitectura Dinámica:** Uso de Server y Client Components en Next.js para optimizar el rendimiento y la interactividad.
+* **Integración NoSQL Local:** Configuración completa de Firebase Emulator (Firestore) para un entorno de desarrollo seguro, rápido y sin costos de nube.
+* **Rutas Dinámicas:** Generación de páginas sobre la marcha para Categorías (`/category/[id]`), Artículos (`/article/[id]`) y Perfiles de Autor (`/author/[id]`) cruzando relaciones de datos.
+* **Diseño Responsivo y Modular:** Principio DRY aplicado a través de componentes reutilizables (como `ArticleCard`) y maquetación Mobile-First con Tailwind CSS.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tecnologías y Herramientas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* **Framework:** Next.js (App Router)
+* **Estilos y Tipografía:** Tailwind CSS, Google Fonts (Playfair Display & Inter)
+* **Base de Datos:** Firebase (Firestore + Local Emulator Suite)
+* **Lenguaje:** TypeScript / React
+* **Package Manager:** pnpm
+* **Control de Versiones y Entorno:** Git
 
-## Learn More
+## Instalación y Uso Local
 
-To learn more about Next.js, take a look at the following resources:
+Para correr este proyecto en tu máquina local junto con la base de datos simulada:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clona el repositorio:
+   ```bash
+   git clone [https://github.com/TU_USUARIO/revista-digital.git](https://github.com/TU_USUARIO/revista-digital.git)
+2. Instala las dependencias:
+    pnpm install
+3. Inicia el emulador de Firebase (asegúrate de tener Java instalado para el emulador):
+    firebase emulators:start
+4. En una nueva terminal, inicia el servidor de desarrollo:
+    pnpm run dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Abre http://localhost:3000 en tu navegador. Puedes gestionar los datos de prueba desde la interfaz del emulador en http://127.0.0.1:4000.
 
-## Deploy on Vercel
+## Estructura del Proyecto
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* **app/**: Enrutador principal, vistas dinámicas y layouts.
+* **components/**: Componentes de interfaz reutilizables (Header, ArticleCard).
+* **lib/hooks/**: Lógica de conexión y consultas a Firestore (useArticles, useAuthor, etc.).
